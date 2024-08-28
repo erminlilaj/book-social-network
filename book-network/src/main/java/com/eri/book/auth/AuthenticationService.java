@@ -22,6 +22,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +37,7 @@ public class AuthenticationService {
     private final TokenRepository tokenRepository;
 
     @Value("${application.mailing.frontend.activation-url}")
+    //@Value("http://localhost:4200/activate-account")
     private String activationUrl;
 
     public void register(RegistrationRequest request) throws MessagingException {
@@ -115,5 +117,19 @@ public class AuthenticationService {
         }
 
         return codeBuilder.toString();
+    }
+
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        var auth = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+        var claims = new HashMap<String, Object>();
+        var user = ((User)auth.getPrincipal());
+        claims.put("fullName", user.fullName());
+        var jwtToken=jwtService.generateToken(claims, user);
+        return AuthenticationResponse.builder().token(jwtToken).build();
     }
 }
