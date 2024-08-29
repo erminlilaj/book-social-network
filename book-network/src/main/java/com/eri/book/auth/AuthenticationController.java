@@ -40,6 +40,7 @@ public ResponseEntity<AuthenticationResponse> authenticate(
 }
 
 
+
     @GetMapping("/activate-account")
     public void confirm(
             @RequestParam String token
