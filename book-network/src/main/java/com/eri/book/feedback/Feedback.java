@@ -1,5 +1,6 @@
 package com.eri.book.feedback;
 
+import com.eri.book.book.Book;
 import com.eri.book.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,9 @@ public class Feedback extends BaseEntity {
 //    private Integer id;
     private Double note; //1-5 stars
     private String comment;
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
 //    @CreatedDate
 //    @Column(nullable = false, updatable = false)
 //    private LocalDate createdAt;

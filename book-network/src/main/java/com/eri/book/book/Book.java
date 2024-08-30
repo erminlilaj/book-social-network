@@ -1,6 +1,9 @@
 package com.eri.book.book;
 
 import com.eri.book.common.BaseEntity;
+import com.eri.book.feedback.Feedback;
+import com.eri.book.history.BookTransactionHistory;
+import com.eri.book.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +17,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,6 +37,17 @@ public class Book extends BaseEntity {
     private String bookCover;
     private boolean archived;
     private boolean sharable;
+    //to create a many to one relationship between book and user
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
+
+    @OneToMany(mappedBy = "book")
+    private List<Feedback> feedbacks;
+
+    @OneToMany(mappedBy = "book")
+    private List<BookTransactionHistory> histories;
+
 //    @CreatedDate
 //    @Column(nullable = false, updatable = false)
 //    private LocalDate createdAt;

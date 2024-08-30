@@ -1,5 +1,7 @@
 package com.eri.book.user;
 
+import com.eri.book.book.Book;
+import com.eri.book.history.BookTransactionHistory;
 import com.eri.book.role.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -55,7 +57,11 @@ public class User implements UserDetails, Principal {
     @ManyToMany(fetch = EAGER)
     private List<Role> roles;
 
-
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
+///
+    @OneToMany(mappedBy = "user")
+    private List<BookTransactionHistory> histories;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
