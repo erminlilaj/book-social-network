@@ -14,7 +14,7 @@ public class BookMapper {
                 .authorName(request.authorName())
                 .synopsis(request.synopsis())
                 .archived(false)//by default when u create a book
-                .sharable(request.shareable())
+                .shareable(request.shareable())
                 .build();
     }
 
@@ -27,7 +27,7 @@ public class BookMapper {
                 .synopsis(book.getSynopsis())
                 .rate(book.getRate())
                 .archived(book.isArchived())
-                .shareable(book.isSharable())
+                .shareable(book.isShareable())
                 .owner(book.getOwner().fullName())
                 //todo
                 //.cover()

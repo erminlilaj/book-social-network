@@ -36,7 +36,7 @@ public class Book extends BaseEntity {
     private String synopsis;
     private String bookCover;
     private boolean archived;
-    private boolean sharable;
+    private boolean shareable;
     //to create a many to one relationship between book and user
     @ManyToOne
     @JoinColumn(name = "owner_id")
