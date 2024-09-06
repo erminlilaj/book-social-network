@@ -1,6 +1,7 @@
 package com.eri.book.book;
 
 import com.eri.book.common.PageResponse;
+import com.eri.book.exception.OperationNotPermittedException;
 import com.eri.book.history.BookTransactionHistory;
 import com.eri.book.history.BookTransactionHistoryRepository;
 import com.eri.book.user.User;
@@ -110,5 +111,18 @@ public class BookService {
                 allBorrowedBooks.isLast()
 
         );
+    }
+
+    public Integer updateShareableStatus(Integer bookId, Authentication connectedUser) {
+        Book book= bookRepository.findById(bookId)
+                .orElseThrow(()-> new EntityNotFoundException("no book found with id"+bookId));
+        User user  =((User) connectedUser.getPrincipal());//so that the owner can update
+        if(!Object.equals(book.getOwner().getBooks(), user.getId())){
+            //create a non permit exception
+            throw new OperationNotPermittedException("you cannnot update books sharable status");//need to handle in handler
+                    }
+        book.setShareable(!book.isShareable());//inverse the value
+        bookRepository.save(book);
+        return bookId;
     }
 }
