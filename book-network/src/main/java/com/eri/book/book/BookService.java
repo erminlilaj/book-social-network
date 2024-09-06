@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -117,11 +118,23 @@ public class BookService {
         Book book= bookRepository.findById(bookId)
                 .orElseThrow(()-> new EntityNotFoundException("no book found with id"+bookId));
         User user  =((User) connectedUser.getPrincipal());//so that the owner can update
-        if(!Object.equals(book.getOwner().getBooks(), user.getId())){
+        if(!Objects.equals(book.getOwner().getId(), user.getId())){
             //create a non permit exception
             throw new OperationNotPermittedException("you cannnot update books sharable status");//need to handle in handler
                     }
         book.setShareable(!book.isShareable());//inverse the value
+        bookRepository.save(book);
+        return bookId;
+    }
+
+    public Integer updateArchivedStatus(Integer bookId, Authentication connectedUser) {
+        Book book= bookRepository.findById(bookId)
+                .orElseThrow(()-> new EntityNotFoundException("no book found with id "+bookId));
+        User user= ((User) connectedUser.getPrincipal());
+        if(!Objects.equals(book.getOwner().getId(),user.getId())){
+            throw new OperationNotPermittedException("you cannot update book archived status");
+        }
+        book.setArchived(!book.isArchived());
         bookRepository.save(book);
         return bookId;
     }
