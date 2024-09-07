@@ -1,7 +1,9 @@
 package com.eri.book.book;
 
+import com.eri.book.file.FileUtils;
 import com.eri.book.history.BookTransactionHistory;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +33,7 @@ public class BookMapper {
                 .shareable(book.isShareable())
                 .owner(book.getOwner().fullName())
                 //todo
-                //.cover()
+                .cover(FileUtils.readFileFromLocation(book.getBookCover()))
                 .build();
     }
 
