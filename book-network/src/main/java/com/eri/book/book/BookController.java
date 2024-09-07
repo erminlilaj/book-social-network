@@ -3,7 +3,6 @@ package com.eri.book.book;
 import com.eri.book.common.PageResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.xml.bind.annotation.XmlValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -85,6 +84,12 @@ public class BookController {
 ){
         return ResponseEntity.ok(service.borrowBook(bookId,connectedUser));
 }
-
+@PatchMapping("/borrow/return/{book-id}")
+    public ResponseEntity<Integer> returnBorrowBook(
+            @PathVariable("book-id") Integer bookId,
+            Authentication connectedUser
+){
+        return ResponseEntity.ok(service.returnBorrowedBook(bookId,connectedUser));
+}
 
 }
