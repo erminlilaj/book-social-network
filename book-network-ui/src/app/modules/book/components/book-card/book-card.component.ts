@@ -36,7 +36,7 @@ export class BookCardComponent {
     if(this._book.cover){
       return 'data:image/jpeg;base64,' + this._book.cover;//to convert the base 64 to image
     }
-    return 'https://source.unsplash.com/1600x900';
+    return 'https://picsum.photos/1900/800';
   }
   @Output() private share: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
   @Output() private archived: EventEmitter<BookResponse> = new EventEmitter<BookResponse>();
