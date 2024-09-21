@@ -123,7 +123,7 @@ public class BookService {
         User user  =((User) connectedUser.getPrincipal());//so that the owner can update
         if(!Objects.equals(book.getOwner().getId(), user.getId())){
             //create a non permit exception
-            throw new OperationNotPermittedException("you cannnot update books sharable status");//need to handle in handler
+            throw new OperationNotPermittedException("you cannnot update books shareable status");//need to handle in handler
                     }
         book.setShareable(!book.isShareable());//inverse the value
         bookRepository.save(book);
