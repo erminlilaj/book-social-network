@@ -16,6 +16,7 @@ public class BookMapper {
         .title(request.title())
                 .authorName(request.authorName())
                 .synopsis(request.synopsis())
+                .isbn(request.isbn())//////////didnt save the isbn previously
                 .archived(false)//by default when u create a book
                 .shareable(request.shareable())
                 .build();
